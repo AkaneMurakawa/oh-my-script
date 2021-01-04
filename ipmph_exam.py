@@ -7,8 +7,8 @@
 import requests
 import re
 
-USER_ID = "xxxxxxxxxxx"
-KEYWORD = '内科'
+USER_ID = "xxxxx"
+KEYWORD = '2017级临床'
 CHOICE_DICT = {
     0: 'A',
     1: 'B',
@@ -16,7 +16,7 @@ CHOICE_DICT = {
     3: 'D',
     4: 'E',
 }
-f = open("exam.md", "w", encoding='utf-8')
+f = open(KEYWORD + ".md", "w", encoding='utf-8')
 pattern = re.compile(r'<[^>]+>', re.S)
 
 
@@ -38,10 +38,10 @@ def run():
         'examName': KEYWORD,
         'pageSize': 10
     }
-    # 获取内科题库列表
+    # 获取题库列表
     response = requests.post('http://tk.ipmph.com/exam/a/5.9/api/examTask/list', headers=headers, data=data)
-    print('人卫教学助手 - 获取内科题库列表')
-    f.write('人卫教学助手 - 获取内科题库列表')
+    print('人卫教学助手 - 获取题库列表')
+    f.write('人卫教学助手 - 获取题库列表')
     # print(response.text)
     # print(response.json())
 
