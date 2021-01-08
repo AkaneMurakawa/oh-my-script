@@ -12,6 +12,7 @@ import requests
 import datetime
 import time
 import json
+import re
 
 # demo
 # url: https://demo.archerydms.com
@@ -158,13 +159,16 @@ def detail(headers, row):
         print('unsupported audit type')
         return
     if row['engineer_display'] not in MOBILE:
-        print('user not in the auto audit list')
+        print('user not in the auto audit list', row['engineer_display'] )
         return
 
     # query detail for setting csrfmiddlewaretoken
     workflow_id = row['id']
     response = requests.get(SQL_DETAIL_URL + str(workflow_id), headers=headers)
-    csrfmiddlewaretoken = response.text.split('form')[2].replace(' ', '').split('csrfmiddlewaretoken')[1].split('\'/>')[0].split('value=\'')[1]
+    try:
+        csrfmiddlewaretoken = re.search("csrfmiddlewaretoken' value='.*/>", response.text, 0).group().split("value='")[1].split("'")[0]
+    except:
+        csrfmiddlewaretoken = response.text.split('form')[2].replace(' ', '').split('csrfmiddlewaretoken')[1].split('\'/>')[0].split('value=\'')[1]
 
     set_cookie_token(headers, response)
     audit(headers, csrfmiddlewaretoken, row)
@@ -187,10 +191,13 @@ def audit(headers, csrfmiddlewaretoken, row):
     }
     try:
         response = requests.post(SQL_AUDIT_URL, headers=headers, data=data)
-        csrfmiddlewaretoken = response.text.split('form')[2].replace(' ', '').split('csrfmiddlewaretoken')[1].split('\'/>')[0].split('value=\'')[1]
+        csrfmiddlewaretoken = re.search("csrfmiddlewaretoken' value='.*/>", response.text, 0).group().split("value='")[1].split("'")[0]
     except:
-        print('SQL audit fail')
-        return
+        try:
+            csrfmiddlewaretoken = response.text.split('form')[2].replace(' ', '').split('csrfmiddlewaretoken')[1].split('\'/>')[0].split('value=\'')[1]
+        except:
+            print('SQL audit fail')
+            return
     set_cookie_token(headers, response)
     execute(headers, csrfmiddlewaretoken, row)
 
@@ -262,11 +269,4 @@ def send_dingtalk(row):
 
 
 if __name__ == '__main__':
-    while True:
-        try:
-            run()
-            # try again after 10m
-            print('sleep 10 minutes, now time:', datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
-            time.sleep(10 * 60)
-        except Exception as err:
-            print('something error', err)
+    run()
