@@ -119,7 +119,8 @@ def query(headers, offset):
         'navStatus': 'workflow_manreviewing',
         'instance_id': '',
         'group_id': '',
-        'start_date': date_time,
+        # 'start_date': date_time,
+        'start_date': date_time + datetime.timedelta(days=-7),
         'end_date': date_time,
         'search': '',
     }
