@@ -1,13 +1,17 @@
 # !/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
-人卫教学助手 - 题库获取脚本
+人卫教学助手V5.9 - 题库获取脚本
+修改USER_ID, SIGN, KEYWORD
 """
 
 import requests
 import re
 
-USER_ID = "xxxxx"
+URL_SUFFIX = 'http://tk.ipmph.com/exam/a/5.9'
+USER_ID = 'xxxxxxxx'
+SIGN = 'XKzlN2pnNxIWnAP2BIF4l10HkSqi4uS1R2CkiTzqV6cJ7w+4kbfECH9j6r3+jH1CL8ulm10pyktWyiLBnYCrU4DSooRuZqni' \
+                'm73zCOxWFscHgbHUSyWQgpTKWiFd6MYb5IoMKftTFXcSsPFfyjJEgcNmNK1TOClsNRnSaqR+G6A='
 KEYWORD = '2017级临床'
 CHOICE_DICT = {
     0: 'A',
@@ -30,8 +34,7 @@ def run():
         'Sec-Fetch-Mode': 'cors',
     }
     data = {
-        'sign': 'XKzlN2pnNxIWnAP2BIF4l10HkSqi4uS1R2CkiTzqV6cJ7w+4kbfECH9j6r3+jH1CL8ulm10pyktWyiLBnYCrU4DSooRuZqni'
-                'm73zCOxWFscHgbHUSyWQgpTKWiFd6MYb5IoMKftTFXcSsPFfyjJEgcNmNK1TOClsNRnSaqR+G6A=',
+        'sign': SIGN,
         'userId': USER_ID,
         'pageNo': 1,
         'status': 2,
@@ -39,7 +42,7 @@ def run():
         'pageSize': 10
     }
     # 获取题库列表
-    response = requests.post('http://tk.ipmph.com/exam/a/5.9/api/examTask/list', headers=headers, data=data)
+    response = requests.post(URL_SUFFIX + '/api/examTask/list', headers=headers, data=data)
     print('人卫教学助手 - 获取题库列表')
     f.write('人卫教学助手 - 获取题库列表')
     # print(response.text)
@@ -56,21 +59,20 @@ def detail(headers, row):
     data = {
         'examStudentId': exam_student_id,
         'frequencyNum': 1,
-        'sign': 'XKzlN2pnNxIWnAP2BIF4l10HkSqi4uS1R2CkiTzqV6cJ7w+4kbfECH9j6r3+jH1CL8ulm10pyktWyiLBnYCrU4DSooRuZqni'
-                'm73zCOxWFscHgbHUSyWQgpTKWiFd6MYb5IoMKftTFXcSsPFfyjJEgcNmNK1TOClsNRnSaqR+G6A=',
+        'sign': SIGN,
         'manyExamId': many_exam_id,
         'userId': USER_ID,
     }
-    response = requests.post('http://tk.ipmph.com/exam/a/5.9/api/examTask/detail', headers=headers, data=data)
+    response = requests.post(URL_SUFFIX + '/api/examTask/detail', headers=headers, data=data)
     # print(response.text)
     # print(response.json())
 
     print('=================================================START==================================================')
-    f.write('=================================================START==================================================\n')
+    f.write('=================================================START=================================================\n')
     result = response.json().get('data')
-    print('EaxmName:', result['examName'])
+    print('标题:', result['examName'])
     print('Total:', result['questionTotal'])
-    f.write('EaxmName:' + result['examName'] + '\n')
+    f.write('标题:' + result['examName'] + '\n')
     f.write('Total:' + str(result['questionTotal']) + '\n')
 
     model_question_list = result['modelQuestionList']
