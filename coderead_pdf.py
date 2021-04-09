@@ -5,7 +5,7 @@
 源码阅读网题库下载 仅供娱乐，非商业用途
 程序说明：下载的思路很简单，发现在源码阅读网首页直接就展示了所有pdf的名称，于是直接下载了首页的html文件，
 然后利用正则 "/r//.*pdf"直接匹配到所有pdf的url路径，然后拼接前缀 "http://r.coderead.cn"，
-在这里我利用的是vscode的批量复制功能，Ctrl+Shift+L。最后就是简单的使用python的requests库进行下载，
+在这里我利用的是vscode的批量复制功能，Alt+Enter批量选中，然后Ctrl+复制。最后就是简单的使用python的requests库进行下载，
 这里会进行拦截认证，因此需要将必要的请求头或者cookie进行设置，发现这里并没有进行cookie存储，然后请求header
 里用的key是不变的，因此本程序就这样完成了。
 
