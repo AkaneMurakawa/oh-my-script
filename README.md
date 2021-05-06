@@ -1,2 +1,3 @@
 # python_script
-自用的python脚本
+
+写的一些便捷自动化Python脚本，分享于此。
