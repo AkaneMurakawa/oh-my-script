@@ -4,4 +4,5 @@ cd C:\Program Files\Oracle\VirtualBox
 echo "starting ubuntu ......"
 # ubuntu为虚拟机名称
 VboxManage startvm ubuntu
+# 重启系统后即可自动启动虚拟机系统
 
