@@ -1,8 +1,10 @@
 # !/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
+
 人卫教学助手V5.9 - 题库获取脚本
 修改USER_ID, SIGN, KEYWORD
+
 """
 
 import requests
@@ -13,6 +15,7 @@ USER_ID = 'xxxxxxxx'
 SIGN = 'XKzlN2pnNxIWnAP2BIF4l10HkSqi4uS1R2CkiTzqV6cJ7w+4kbfECH9j6r3+jH1CL8ulm10pyktWyiLBnYCrU4DSooRuZqni' \
                 'm73zCOxWFscHgbHUSyWQgpTKWiFd6MYb5IoMKftTFXcSsPFfyjJEgcNmNK1TOClsNRnSaqR+G6A='
 KEYWORD = '2017级临床'
+
 CHOICE_DICT = {
     0: 'A',
     1: 'B',
