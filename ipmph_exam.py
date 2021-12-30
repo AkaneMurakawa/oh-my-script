@@ -4,7 +4,8 @@
 
 人卫教学助手V5.9 - 题库获取脚本
 修改USER_ID, SIGN, KEYWORD
-
+:copyright: (c) 2021 by AkaneMurakwa.
+:date: 2021
 """
 
 import requests
